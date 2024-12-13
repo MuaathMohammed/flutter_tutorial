@@ -64,34 +64,7 @@ class _HomePageState extends State<HomePage>
     return  Stack(
         children: [
           // Drawer
-          SlideTransition(
-            position: _slideAnimation,
-            child: Material(
-              child: Container(
-                width: 250,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ListTile(
-                      leading: Icon(Icons.home, ),
-                      title: Text("Home", ),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text("Profile",),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text("Settings"),
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+         _buildDrawer(),
           // Main Content
           AnimatedBuilder(
             animation: _controller,
@@ -100,69 +73,7 @@ class _HomePageState extends State<HomePage>
                 scale: _scaleAnimation.value,
                 child: Transform.translate(
                   offset: Offset(_isDrawerOpen ? 250 : 0, 0),
-                  child: GestureDetector(
-                    onTap: () {
-                      if (_isDrawerOpen) toggleDrawer();
-                    },
-                    child: Material(
-                      elevation: 8,
-                      borderRadius: BorderRadius.circular(_isDrawerOpen ? 20 : 0),
-                      child: Scaffold(
-                        appBar: AppBar(
-                          title: Text("Home"),
-
-                          leading: IconButton(
-                            icon: Icon(Icons.menu),
-                            onPressed: toggleDrawer,
-                          ),
-                          actions: [
-                            IconButton(
-                              icon: Icon(
-                                themeProvider.themeMode == ThemeMode.light
-                                    ? Icons.dark_mode
-                                    : Icons.light_mode,
-                              ),
-                              onPressed: () {
-                                themeProvider.toggleTheme();
-                              },
-                            ),
-                            
-                          ],
-
-                        ),
-                        body: Column(
-                          children: [
-                            Center(
-                              child: Text(
-                                "Main Content",
-                                style: TextStyle(fontSize: 24),
-                              ),
-                            ),
-                            Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Welcome, ${widget.user?.username}!', style: TextStyle(fontSize: 24)),
-                                  SizedBox(height: 16),
-                                  Text('User ID: ${widget.user?.id}', style: TextStyle(fontSize: 18)),
-                                  SizedBox(height: 24),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      // Example of changing state or navigating
-                                      // You can add more functionality here
-                                      Navigator.pop(context); // Go back to login screen
-                                    },
-                                    child: Text('Logout'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: _buildPage(themeProvider,_isDrawerOpen),
                 ),
               );
             },
@@ -172,4 +83,104 @@ class _HomePageState extends State<HomePage>
         ],
       )
     ;
-  }}
+  }
+
+   _buildDrawer() {
+  return  SlideTransition(
+      position: _slideAnimation,
+      child: Material(
+        child: Container(
+          width: 250,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ListTile(
+                leading: Icon(Icons.home, ),
+                title: Text("Home", ),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text("Profile",),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text("Settings"),
+                onTap: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _buildPage(themeProvider,_isDrawerOpen) {
+
+   return GestureDetector(
+      onTap: () {
+        if (_isDrawerOpen) toggleDrawer();
+      },
+      child: Material(
+        elevation: 8,
+        borderRadius: BorderRadius.circular(_isDrawerOpen ? 20 : 0),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Home"),
+
+            leading: IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: toggleDrawer,
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  themeProvider.themeMode == ThemeMode.light
+                      ? Icons.dark_mode
+                      : Icons.light_mode,
+                ),
+                onPressed: () {
+                  themeProvider.toggleTheme();
+                },
+              ),
+
+            ],
+
+          ),
+          body: Column(
+            children: [
+              Center(
+                child: Text(
+                  "Main Content",
+                  style: TextStyle(fontSize: 24),
+                ),
+              ),
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Welcome, ${widget.user?.username}!', style: TextStyle(fontSize: 24)),
+                    SizedBox(height: 16),
+                    Text('User ID: ${widget.user?.id}', style: TextStyle(fontSize: 18)),
+                    SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Example of changing state or navigating
+                        // You can add more functionality here
+                        Navigator.pop(context); // Go back to login screen
+                      },
+                      child: Text('Logout'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+}
