@@ -1,3 +1,5 @@
 const Map<String, String> ar = {
-'home':'البداية'
+'home':'البداية',
+'yaser':'ياسر',
+  'go':'اذهب'
 };

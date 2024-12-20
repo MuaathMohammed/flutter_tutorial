@@ -9,6 +9,7 @@ import 'package:flutter_tutorial/widgets/custome_card.dart';
 import '../config/routes.dart';
 import '../models/login_models.dart';
 import '../widgets/custome_text_filed.dart';
+import 'home2_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -30,15 +31,14 @@ class _LoginScreenState extends State<LoginPage> {
       );
 
      // // Navigate to HomeScreen and pass the user model
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomePage(user: user),
-        ),
-      );
+     //  Navigator.push(
+     //    context,
+     //    MaterialPageRoute(
+     //      builder: (context) => Home1Page(),
+     //    ),
+     //  );
       // You can add your login logic here
-      //print("kkkkkkkkk"+user.toString());
-      //RouterManager.navigateTo(homeRoute); // Navigate to third page
+      RouterManager.navigateTo(providerRoute); // Navigate to third page
 
     }
   }

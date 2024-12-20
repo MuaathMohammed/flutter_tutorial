@@ -3,26 +3,26 @@ import 'package:flutter/material.dart';
 import 'MyLang/CashData.dart';
 
 class AppLanguage extends GetxController {
-  RxString appLocal = 'ar'.obs;  // Make appLocal observable
+  String appLocal = 'ar';  // Make appLocal observable
 
   @override
   void onInit() async {
     super.onInit();
     CashData cash = CashData();
     // Load saved language or default to 'ar'
-    appLocal.value = await cash.selectedLanguage ?? 'ar';
-    Get.updateLocale(Locale(appLocal.value));  // Set locale immediately
+    appLocal = await cash.selectedLanguage ?? 'ar';
+    Get.updateLocale(Locale(appLocal));  // Set locale immediately
   }
 
   // Method to change language
   void changeLanguage(String type) async {
     CashData cash = CashData();
 
-    if (appLocal.value == type) {
+    if (appLocal == type) {
       return;
     }
 
-    appLocal.value = type;
+    appLocal = type;
     await cash.saveLanguageState(type); // Save selected language
     Get.updateLocale(Locale(type)); // Update locale immediately
   }

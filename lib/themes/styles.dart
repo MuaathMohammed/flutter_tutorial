@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/helpers/constants.dart';
-
 import 'colors.dart';
+
 class AppTextStyle{
  static final TextStyle h1Big= TextStyle(
   color: AppColors.text,

@@ -1,42 +1,37 @@
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../Provider/Notifier/ThemeNotifier.dart';
 import '../models/login_models.dart';
+import '../themes/colors.dart';
 
 class HomePage extends StatefulWidget {
-  late  UserModel? user;
+  final UserModel? user;
 
-   HomePage({super.key, this.user});
+  const HomePage({Key? key, this.user}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<Offset> _slideAnimation;
 
   bool _isDrawerOpen = false;
-  late UserModel _model;
+  ThemeMode _themeMode = ThemeMode.light;
 
   @override
   void initState() {
     super.initState();
-    //_model=widget.user;
-    //print(widget.user);
+
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
     );
 
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.85).animate(_controller);
     _slideAnimation = Tween<Offset>(
-      begin: Offset(-1.0, 0.0),
-      end: Offset(0.0, 0.0),
+      begin: const Offset(-1.0, 0.0),
+      end: const Offset(0.0, 0.0),
     ).animate(_controller);
   }
 
@@ -51,6 +46,12 @@ class _HomePageState extends State<HomePage>
     });
   }
 
+  void toggleTheme() {
+    setState(() {
+      _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -59,119 +60,111 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
-    return  Stack(
-        children: [
-          // Drawer
-         _buildDrawer(),
-          // Main Content
-          AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              return Transform.scale(
-                scale: _scaleAnimation.value,
-                child: Transform.translate(
-                  offset: Offset(_isDrawerOpen ? 250 : 0, 0),
-                  child: _buildPage(themeProvider,_isDrawerOpen),
-                ),
-              );
-            },
-          ),
-
-
-        ],
-      )
-    ;
-  }
-
-   _buildDrawer() {
-  return  SlideTransition(
-      position: _slideAnimation,
-      child: Material(
-        child: Container(
-          width: 250,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ListTile(
-                leading: Icon(Icons.home, ),
-                title: Text("Home", ),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text("Profile",),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text("Settings"),
-                onTap: () {},
-              ),
-            ],
-          ),
+    return MaterialApp(
+      title: 'Home Page',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: _themeMode,
+      home: Material(
+        child: Stack(
+          children: [
+            _buildDrawer(),
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _scaleAnimation.value,
+                  child: Transform.translate(
+                    offset: Offset(_isDrawerOpen ? 250 : 0, 0),
+                    child: _buildMainContent(),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
   }
 
-  _buildPage(themeProvider,_isDrawerOpen) {
+  Widget _buildDrawer() {
+    return SlideTransition(
+      position: _slideAnimation,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: _themeMode == ThemeMode.light ? AppGradients.backgroundGradient:AppGradients.backgroundGradientDark
 
-   return GestureDetector(
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.home, color: Colors.white),
+              title: const Text("Home", style: TextStyle(color: Colors.white)),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.person, color: Colors.white),
+              title: const Text("Profile", style: TextStyle(color: Colors.white)),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings, color: Colors.white),
+              title: const Text("Settings", style: TextStyle(color: Colors.white)),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMainContent() {
+    return GestureDetector(
       onTap: () {
         if (_isDrawerOpen) toggleDrawer();
       },
-      child: Material(
-        elevation: 8,
-        borderRadius: BorderRadius.circular(_isDrawerOpen ? 20 : 0),
-        child: Scaffold(
+      
+      child: Scaffold(
           appBar: AppBar(
-            title: Text("Home"),
-
+            title: const Text("Home"),
             leading: IconButton(
-              icon: Icon(Icons.menu),
+              icon: const Icon(Icons.menu),
               onPressed: toggleDrawer,
             ),
             actions: [
               IconButton(
                 icon: Icon(
-                  themeProvider.themeMode == ThemeMode.light
-                      ? Icons.dark_mode
-                      : Icons.light_mode,
+                  _themeMode == ThemeMode.light ? Icons.dark_mode : Icons.light_mode,
                 ),
-                onPressed: () {
-                  themeProvider.toggleTheme();
-                },
+                onPressed: toggleTheme,
               ),
-
             ],
-
           ),
           body: Column(
             children: [
-              Center(
-                child: Text(
-                  "Main Content",
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
+              const SizedBox(height: 50),
               Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Welcome, ${widget.user?.username}!', style: TextStyle(fontSize: 24)),
-                    SizedBox(height: 16),
-                    Text('User ID: ${widget.user?.id}', style: TextStyle(fontSize: 18)),
-                    SizedBox(height: 24),
+                    Text(
+                      'Welcome, ${widget.user?.username ?? 'Guest'}!',
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'User ID: ${widget.user?.id ?? 'N/A'}',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: () {
-                        // Example of changing state or navigating
-                        // You can add more functionality here
-                        Navigator.pop(context); // Go back to login screen
+                        Navigator.pop(context);
                       },
-                      child: Text('Logout'),
+                      child: const Text('Logout'),
                     ),
                   ],
                 ),
@@ -179,8 +172,7 @@ class _HomePageState extends State<HomePage>
             ],
           ),
         ),
-      ),
+      
     );
   }
-
 }

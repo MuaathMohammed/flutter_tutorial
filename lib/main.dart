@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'Provider/Notifier/ThemeNotifier.dart';
 import 'helpers/Localization/AppLanguage.dart';
-import 'helpers/Localization/myLocal.dart';
+import 'helpers/Localization/translate.dart';
 import 'themes/dark_theme.dart';
 import 'themes/light_theme.dart';
 import 'views/login_page.dart';
@@ -24,6 +24,7 @@ import 'views/login_page.dart';
 //   runApp(MyApp(appLanguage: appLanguage));
 // }
 //
+//
 // class MyApp extends StatelessWidget {
 //   final AppLanguage appLanguage;
 //
@@ -34,8 +35,7 @@ import 'views/login_page.dart';
 //     return GetMaterialApp(
 //       debugShowCheckedModeBanner: false,
 //       translations: translate(), // Add translations
-//       locale: Locale(Get.find<AppLanguage>().appLocal.value), // Dynamically set locale
-//       fallbackLocale: Locale('en'), // Fallback language
+//       locale: Locale(Get.find<AppLanguage>().appLocal), // Dynamically set locale
 //       home: GetxHome(),
 //     );
 //   }
@@ -47,7 +47,7 @@ void main() {
   //runApp(const MyApp());
   runApp(
     ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+      create: (context) => ThemeNotifier(),
       child: const MyApp(),
     ),
   );
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeNotifier>(context);
 
     bool isDarkMode = false;
 
@@ -74,4 +74,52 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+// void main() {
+//
+//   //runApp(const MyApp());
+//   runApp( const MyApp(),
+//
+//   );
+// }
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       initialRoute: baseRoute,
+//       navigatorKey: RouterManager.navigatorKey,
+//       onGenerateRoute: RouterManager.generateRoute,
+//     );
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

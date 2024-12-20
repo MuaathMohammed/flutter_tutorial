@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../themes/light_theme.dart';
-import '../../themes/dark_theme.dart';
 
-class ThemeProvider with ChangeNotifier {
+import '../../themes/dark_theme.dart';
+import '../../themes/light_theme.dart';
+
+class ThemeNotifier extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.light;
 
   ThemeMode get themeMode => _themeMode;
@@ -37,4 +38,5 @@ class ThemeProvider with ChangeNotifier {
     _themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
   }
+
 }

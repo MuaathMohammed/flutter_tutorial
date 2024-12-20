@@ -25,6 +25,10 @@ class AppRegex {
   // Matches a hex color code (e.g., #FFFFFF)
   static final RegExp hexColor = RegExp(r'^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$');
 }
+
+
+
+
 //This is function for email validation
 String? validateEmail(String? value) {
   if (value == null || value.isEmpty) {

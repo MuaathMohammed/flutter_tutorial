@@ -6,30 +6,34 @@ class GetxHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return _build();}
+    return _build();
+  }
 
-  Widget _build() {
+
+
+
+   _build() {
     final AppLanguage appLanguage = Get.find<AppLanguage>();  // Access the controller
 
-    return GetBuilder<AppLanguage>(  // GetBuilder to listen for updates in AppLanguage
-      builder: (value) => Scaffold(
+    return  Scaffold(
         appBar: _appBar(appLanguage),
         body: _buildBody(appLanguage),
-      ),
+
     );
 
   }
 
   _appBar(appLanguage) {
     return AppBar(
-      title: Text('home'.tr),  // Translate this text using GetX translation
+      title:  GetBuilder<AppLanguage>(  // GetBuilder to listen for updates in AppLanguage
+        builder: (value) =>Text('home'.tr)),  // Translate this text using GetX translation
       actions: [
         IconButton(
           icon: Icon(Icons.language),
           onPressed: () {
             // Switch language
             appLanguage.changeLanguage(
-                appLanguage.appLocal.value == 'ar' ? 'en' : 'ar');
+                appLanguage.appLocal == 'ar' ? 'en' : 'ar');
           },
         ),
       ],
@@ -43,13 +47,13 @@ class GetxHome extends StatelessWidget {
         children: [
           // Text that updates when the language changes
           Text(
-            'home'.tr,
+            'yaser'.tr,
             style: TextStyle(fontSize: 24),
           ),
           ElevatedButton(
             onPressed: () {
               appLanguage.changeLanguage(
-                  appLanguage.appLocal.value == 'ar' ? 'en' : 'ar');
+                  appLanguage.appLocal == 'ar' ? 'en' : 'ar');
             },
             child: Text('Change Language'),
           ),

@@ -27,9 +27,12 @@ class CustomGradientButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: defaultPadding,horizontal: 20.0),
         decoration:
         isBoxed==true?
-        ThemeDecorations.gradientBoxDecoration(context):isShaped==true?
-        ThemeDecorations.gradientBox(context):isRounded==true?
-        ThemeDecorations.gradientRoundedButton(context):ThemeDecorations.gradientButton(context),
+        ThemeDecorations.gradientBoxDecoration(context):
+        isShaped==true?
+        ThemeDecorations.gradientBox(context):
+        isRounded==true?
+        ThemeDecorations.gradientRoundedButton(context):
+        ThemeDecorations.gradientButton(context),
         child: Center(
           child: Text(
             text,

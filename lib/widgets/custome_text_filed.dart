@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/themes/colors.dart';
 
+
+
+
+
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
@@ -30,6 +34,7 @@ class CustomTextField extends StatelessWidget {
           fontSize: 14, // Label text size
           color: isDarkMode ? Colors.white70 : AppColors.primary, // Adjust color based on theme
         ),
+        hintText: labelText,
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         filled: true,
         fillColor: isDarkMode ? Colors.grey[900] : Colors.white, // Adjust background color
@@ -42,7 +47,7 @@ class CustomTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
           borderSide: BorderSide(
             color: isDarkMode ? Colors.grey[700]! : AppColors.accent, // Adjust color based on theme
-            width: 2.0,
+            width: 15.0,
           ),
         ),
         focusedBorder: OutlineInputBorder(

@@ -1,3 +1,5 @@
 const Map<String, String> en = {
-  'home':'Home'
+  'home':'Home',
+  'yaser':'Yaser',
+  'go':"Go"
 };
