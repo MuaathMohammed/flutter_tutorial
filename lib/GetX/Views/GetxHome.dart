@@ -12,7 +12,8 @@ class GetxHome extends StatelessWidget {
 
 
 
-   _build() {
+
+  Widget _build() {
     final AppLanguage appLanguage = Get.find<AppLanguage>();  // Access the controller
 
     return  Scaffold(

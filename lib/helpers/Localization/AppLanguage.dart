@@ -13,7 +13,6 @@ class AppLanguage extends GetxController {
     appLocal = await cash.selectedLanguage ?? 'ar';
     Get.updateLocale(Locale(appLocal));  // Set locale immediately
   }
-
   // Method to change language
   void changeLanguage(String type) async {
     CashData cash = CashData();

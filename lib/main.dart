@@ -13,69 +13,69 @@ import 'themes/light_theme.dart';
 import 'views/login_page.dart';
 
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//
-//   // Create an instance of AppLanguage and initialize it
-//   final appLanguage = AppLanguage();
-//    appLanguage.onInit(); // Ensure the language is loaded before app starts
-//   // Register AppLanguage instance in GetX
-//   Get.put(appLanguage);
-//   runApp(MyApp(appLanguage: appLanguage));
-// }
-//
-//
-// class MyApp extends StatelessWidget {
-//   final AppLanguage appLanguage;
-//
-//   const MyApp({Key? key, required this.appLanguage}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetMaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       translations: translate(), // Add translations
-//       locale: Locale(Get.find<AppLanguage>().appLocal), // Dynamically set locale
-//       home: GetxHome(),
-//     );
-//   }
-// }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-
-void main() {
-
-  //runApp(const MyApp());
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeNotifier(),
-      child: const MyApp(),
-    ),
-  );
+  // Create an instance of AppLanguage and initialize it
+  final appLanguage = AppLanguage();
+   appLanguage.onInit(); // Ensure the language is loaded before app starts
+  // Register AppLanguage instance in GetX
+  Get.put(appLanguage);
+  runApp(MyApp(appLanguage: appLanguage));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
-  // This widget is the root of your application.
+class MyApp extends StatelessWidget {
+  final AppLanguage appLanguage;
+
+  const MyApp({Key? key, required this.appLanguage}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeNotifier>(context);
-
-    bool isDarkMode = false;
-
-    return MaterialApp(
-      title: 'Flutter Demo',
-      themeMode: themeProvider.themeMode,  // Set theme mode based on the provider
-      theme: themeProvider.currentTheme,
-      initialRoute: baseRoute,
-      navigatorKey: RouterManager.navigatorKey,
-      onGenerateRoute: RouterManager.generateRoute,
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      translations: translate(), // Add translations
+      locale: Locale(Get.find<AppLanguage>().appLocal), // Dynamically set locale
+      home: GetxHome(),
     );
   }
 }
 
-
+//
+// void main() {
+//
+//   //runApp(const MyApp());
+//   runApp(
+//     ChangeNotifierProvider(
+//       create: (context) => ThemeNotifier(),
+//       child: const MyApp(),
+//     ),
+//   );
+// }
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+//
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     final themeProvider = Provider.of<ThemeNotifier>(context);
+//
+//     bool isDarkMode = false;
+//
+//     return MaterialApp(
+//       title: 'Flutter Demo',
+//       themeMode: themeProvider.themeMode,  // Set theme mode based on the provider
+//       theme: themeProvider.currentTheme,
+//       initialRoute: baseRoute,
+//       navigatorKey: RouterManager.navigatorKey,
+//       onGenerateRoute: RouterManager.generateRoute,
+//       debugShowCheckedModeBanner: false,
+//     );
+//   }
+// }
+//
+//
 
 
 
