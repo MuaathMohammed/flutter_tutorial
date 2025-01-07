@@ -14,9 +14,9 @@ class LoginController extends GetxController {
   String? refreshedToken;
 
   final DioClient _dioClient = DioClient();
-
   @override
   void onInit() async {
+
     super.onInit();
     // Load tokens from storage when the app starts
     accessToken = await TokenStorage.getAccessToken();
@@ -28,20 +28,21 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> login(String username, String password) async {
+  Future<void> login(String email, String password) async {
     final url = baseAPIURLV1+loginAPI; // Replace with your API login endpoint
 
     try {
       final response = await _dioClient.dio.post(
-        url,options: Options(contentType:"application/json"),
+        url,
+        options: Options(contentType:"application/json"),
         data: {
-          "email": username,
+          "email": email,
           "password": password,
         },
       );
       //print("qqqqqqqqqqqqqqq${response}");
       if (response.statusCode == 200) {
-        final loginResponse = LoginResponse.fromJson(response.data);
+        final loginResponse = LoginResponseModel.fromJson(response.data);
         accessToken = loginResponse.accessToken;
         refreshedToken = loginResponse.refreshToken;
 

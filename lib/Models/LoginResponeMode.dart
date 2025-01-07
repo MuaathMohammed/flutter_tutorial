@@ -1,12 +1,12 @@
-class LoginResponse {
+class LoginResponseModel {
   final String accessToken;
   final String refreshToken;
 
-  LoginResponse({required this.accessToken, required this.refreshToken});
+  LoginResponseModel({required this.accessToken, required this.refreshToken});
 
   // Factory constructor to parse the JSON response
-  factory LoginResponse.fromJson(Map<String, dynamic> json) {
-    return LoginResponse(
+  factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
+    return LoginResponseModel(
       accessToken: json['access'],
       refreshToken: json['refresh'],
     );

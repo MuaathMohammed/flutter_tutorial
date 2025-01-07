@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import '../Models/SubjectModels.dart';
 
 class HomeController extends GetxController {
-  var subjects = <Subject>[].obs; // Observable list of subjects
+  var subjects = <SubjectModel>[].obs; // Observable list of subjects
   var isLoading = true.obs; // Loading state
 
   final DioClient _dio = DioClient(); // Replace with your base URL
@@ -26,7 +26,7 @@ class HomeController extends GetxController {
       if (response.statusCode == 200) {
         // Parse the response into a list of Subject objects
         subjects.value = (response.data as List)
-            .map((json) => Subject.fromJson(json))
+            .map((json) => SubjectModel.fromJson(json))
             .toList();
       } else {
         Get.snackbar("Error", "Failed to fetch subjects",

@@ -1,18 +1,18 @@
-class Subject {
+class SubjectModel {
   final String title;
   final String slug;
   final String photo;
   final int totalCourses;
 
-  Subject({
+  SubjectModel({
     required this.title,
     required this.slug,
     required this.photo,
     required this.totalCourses,
   });
 
-  factory Subject.fromJson(Map<String, dynamic> json) {
-    return Subject(
+  factory SubjectModel.fromJson(Map<String, dynamic> json) {
+    return SubjectModel(
       title: json['title'],
       slug: json['slug'],
       photo: json['photo'],

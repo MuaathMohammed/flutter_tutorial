@@ -4,7 +4,7 @@ import '../Controllers/LoginController.dart';
 import '../Themes/Colors.dart';
 
 class LoginPage extends StatelessWidget {
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -52,9 +52,9 @@ class LoginPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       TextFormField(
-                        controller: usernameController,
+                        controller: emailController,
                         decoration: InputDecoration(
-                          labelText: "Username",
+                          labelText: "email",
                           prefixIcon: const Icon(Icons.person),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -64,7 +64,7 @@ class LoginPage extends StatelessWidget {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your username';
+                            return 'Please enter your email';
                           }
                           return null;
                         },
@@ -93,8 +93,7 @@ class LoginPage extends StatelessWidget {
                           filled: true,
                           fillColor: Colors.grey[200],
                         ),
-                        obscureText:
-                        !_loginController.isPasswordVisible.value,
+                        obscureText:!_loginController.isPasswordVisible.value,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password';
@@ -106,10 +105,10 @@ class LoginPage extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            final username = usernameController.text;
+                            final email = emailController.text;
                             final password = passwordController.text;
 
-                            _loginController.login(username, password);
+                            _loginController.login(email, password);
                           }
                         },
                         style: ElevatedButton.styleFrom(

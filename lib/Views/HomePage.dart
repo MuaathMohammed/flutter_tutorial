@@ -42,6 +42,7 @@ class HomePage extends StatelessWidget {
             return const Center(
               child: CircularProgressIndicator(
                 color: primaryColor,
+
               ),
             );
           }
@@ -61,7 +62,7 @@ class HomePage extends StatelessWidget {
           return ListView.builder(
             padding: const EdgeInsets.all(16),
             itemCount: controller.subjects.length,
-            itemBuilder: (context, index) {
+            itemBuilder: (_, index) {
               final subject = controller.subjects[index];
               return AnimatedOpacity(
                   opacity: controller.isLoading.value ? 0 : 1,
