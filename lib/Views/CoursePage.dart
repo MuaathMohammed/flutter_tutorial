@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/Config/constants.dart';
 import 'package:flutter_tutorial/Views/CourseDetailsPage.dart';
@@ -11,6 +12,18 @@ import '../Themes/Colors.dart';
 
 class CoursesPage extends StatelessWidget {
   final CourseController _controller = Get.put(CourseController());
+  String? subjectId; // Make it a final field (not late)
+
+  // Constructor to accept subjectId
+  CoursesPage({Key? key, this.subjectId}) : super(key: key) {
+    print("CoursesPage constructor - subjectId: $subjectId"); // Debug print
+    if (subjectId == null) {
+      final arguments = Get.arguments;
+      print("Arguments: $arguments"); // Debug print
+      subjectId = arguments != null ? arguments["subjectId"] : null;
+      print("Retrieved subjectId from arguments: $subjectId"); // Debug print
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +58,13 @@ class CoursesPage extends StatelessWidget {
               ),
             );
           }
-
-          if (_controller.courseList.isEmpty) {
+          // Filter the course list based on the subject ID
+          final filteredCourses = subjectId != null
+              ? _controller.courseList
+              .where((course) => course.subject == subjectId)
+              .toList()
+              : _controller.courseList;
+          if (filteredCourses.isEmpty) {
             return const Center(
               child: Text(
                 "No course available.",
@@ -65,9 +83,9 @@ class CoursesPage extends StatelessWidget {
             },
             child: ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: _controller.courseList.length,
+              itemCount: filteredCourses.length,
               itemBuilder: (context, index) {
-                final course = _controller.courseList[index];
+                final course = filteredCourses[index];
                 return AnimatedOpacity(
                   opacity: _controller.isLoading.value ? 0 : 1,
                   duration: const Duration(milliseconds: 500),
@@ -91,25 +109,33 @@ class CoursesPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  "${baseURL + course.photo!}",
-                                  width: 60,
-                                  height: 60,
+                                child:CachedNetworkImage(
+                                  imageUrl: "${baseURL + course.photo!}",
                                   fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      width: 60,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const Icon(
-                                        Icons.image_not_supported_rounded,
-                                        color: primaryColor,
-                                      ),
-                                    );
-                                  },
-                                ),
+                                  placeholder: (context, url) => CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                  height: 60,
+                                  width: 60,
+                                )
+                                // Image.network(
+                                //   "${baseURL + course.photo!}",
+                                //   width: 60,
+                                //   height: 60,
+                                //   fit: BoxFit.cover,
+                                //   errorBuilder: (context, error, stackTrace) {
+                                //     return Container(
+                                //       width: 60,
+                                //       height: 60,
+                                //       decoration: BoxDecoration(
+                                //         borderRadius: BorderRadius.circular(10),
+                                //       ),
+                                //       child: const Icon(
+                                //         Icons.image_not_supported_rounded,
+                                //         color: primaryColor,
+                                //       ),
+                                //     );
+                                //   },
+                                // ),
                               ),
                             ),
                             const SizedBox(width: 16),

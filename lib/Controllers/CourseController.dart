@@ -4,12 +4,10 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
 import '../APIServices/DynamicApiServices.dart';
 import '../Helpers/NetworkHelper.dart';
-import '../Helpers/SQliteDbHelper.dart';
 import '../Models/CourseModel.dart';
 
 class CourseController extends GetxController {
   final ApiService _apiService = ApiService();
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
   var courseList = <CourseModel>[].obs;
   CourseModel? courseDetail;
   var isLoading = true.obs;
@@ -35,16 +33,7 @@ class CourseController extends GetxController {
               .map((json) => CourseModel.fromJson(json))
               .toList();
 
-          // Fetch existing courses from the local database
-          final localCourses = await _databaseHelper.getCourses();
 
-          // Insert only missing courses into the local database
-          for (var apiCourse in apiCourses) {
-            final isCourseExists = localCourses.any((localCourse) => localCourse.id == apiCourse.id);
-            if (!isCourseExists) {
-              await _databaseHelper.insertCourse(apiCourse);
-            }
-          }
 
           // Update the UI with the latest data
           courseList.value = apiCourses;
@@ -53,9 +42,7 @@ class CourseController extends GetxController {
               snackPosition: SnackPosition.BOTTOM);
         }
       } else {
-        // Fetch data from the local database
-        final localCourses = await _databaseHelper.getCourses();
-        courseList.value = localCourses;
+
         Get.snackbar("Info", "No internet connection. Showing local data.",
             snackPosition: SnackPosition.BOTTOM);
       }
@@ -82,9 +69,8 @@ class CourseController extends GetxController {
           courseDetail = CourseModel.fromJson(response.data);
         }
       } else {
-        // Fetch data from the local database
-        final localCourses = await _databaseHelper.getCourses();
-        courseDetail = localCourses.firstWhere((course) => course.id == courseId);
+        Get.snackbar("Info", "No internet connection. Showing local data.",
+            snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       Get.snackbar("Error", "Failed to fetch course details: $e",
@@ -106,16 +92,6 @@ class CourseController extends GetxController {
     try {
       isLoading(true);
 
-      // Add to local database first
-      final newCourse = CourseModel(
-        id: DateTime.now().millisecondsSinceEpoch, // Temporary ID
-        title: title,
-        subject: subject,
-        overview: overview,
-        photo: photo?.path ?? '',
-        createdAt: DateTime.now().toIso8601String(), // Add current timestamp
-      );
-      await _databaseHelper.insertCourse(newCourse);
 
       // Check internet connectivity
       final isConnected = await NetworkHelper.isConnected();
@@ -176,17 +152,6 @@ class CourseController extends GetxController {
     try {
       isLoading(true);
 
-      // Update local database first
-      final updatedCourse = CourseModel(
-        id: courseId,
-        title: title,
-        subject: subject,
-        overview: overview,
-        photo: photo?.path ?? '',
-        createdAt: DateTime.now().toIso8601String(), // Update timestamp
-      );
-      await _databaseHelper.updateCourse(updatedCourse);
-
       // Check internet connectivity
       final isConnected = await NetworkHelper.isConnected();
 
@@ -241,8 +206,7 @@ class CourseController extends GetxController {
     try {
       isLoading(true);
 
-      // Delete from local database first
-      await _databaseHelper.deleteCourse(courseId);
+
 
       // Check internet connectivity
       final isConnected = await NetworkHelper.isConnected();

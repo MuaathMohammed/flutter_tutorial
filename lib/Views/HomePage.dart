@@ -90,8 +90,11 @@ class HomePage extends StatelessWidget {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(15),
                       onTap: () {
-                        // Move to Course Page
-                        Get.to(CoursesPage());
+                        // Navigate to CoursesPage with the subject ID
+                        print(subject.title);
+                        Get.to(
+                          CoursesPage(subjectId: subject.title,)
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(16),
@@ -101,10 +104,11 @@ class HomePage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                                child:CachedNetworkImage(
                                  imageUrl: baseURL + subject.photo,
+                                 fit: BoxFit.cover,
                                  placeholder: (context, url) => CircularProgressIndicator(),
                                  errorWidget: (context, url, error) => Icon(Icons.error),
-                                 height: 100,
-                                 width: 100,
+                                 height: 60,
+                                 width: 60,
                                ),
                               //
                               // Image.network(

@@ -66,29 +66,6 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> refreshToken() async {
-    final url = baseAPIURLV1+refreshTokeAPI; // Replace with your refresh endpoint
-
-    try {
-      final response = await _dioClient.dio.post(
-        url,
-        data: {"refresh": refreshedToken},
-      );
-
-      if (response.statusCode == 200) {
-        accessToken = response.data['access'];
-
-        // Update stored access token
-        await TokenStorage.saveTokens(accessToken!, refreshedToken!);
-      } else {
-        Get.snackbar("Error", "Failed to refresh token",
-            snackPosition: SnackPosition.BOTTOM);
-      }
-    } catch (e) {
-      Get.snackbar("Error", "Failed to refresh token",
-          snackPosition: SnackPosition.BOTTOM);
-    }
-  }
   // Observable for password visibility
   var isPasswordVisible = false.obs;
 
