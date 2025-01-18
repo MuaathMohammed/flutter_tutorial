@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_tutorial/Config/constants.dart';
 import 'package:flutter_tutorial/Controllers/HomeController.dart';
+import 'package:flutter_tutorial/Views/LoginPage.dart';
 import 'package:get/get.dart';
 
 import '../APIServices/DioClient.dart';
@@ -103,6 +104,7 @@ class LoginController extends GetxController {
     await TokenStorage.clearTokens();
     Get.snackbar("Success", "Logged out successfully",
         snackPosition: SnackPosition.BOTTOM);
+    Get.offAll(()=>LoginPage());
   }
 
 }
