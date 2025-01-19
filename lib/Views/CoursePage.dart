@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/Config/constants.dart';
+import 'package:flutter_tutorial/Models/SubjectModels.dart';
 import 'package:flutter_tutorial/Views/CourseDetailsPage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,6 +24,11 @@ class CoursesPage extends StatelessWidget {
             color: textColor,
           ),
         ),
+        actions: [
+          IconButton(onPressed: (){
+            _controller.getCourseList();
+          }, icon: Icon(Icons.refresh))
+        ],
         centerTitle: true,
         backgroundColor: primaryColor,
         elevation: 10,
@@ -91,8 +97,8 @@ class CoursesPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  "${baseURL + course.photo!}",
+                                child: Image.file(
+                                   File(course.photo!),
                                   width: 60,
                                   height: 60,
                                   fit: BoxFit.cover,
@@ -191,7 +197,9 @@ class CoursesPage extends StatelessWidget {
     var subjects = Get.find<HomeController>().subjects;
     final _formKey = GlobalKey<FormState>();
     Rx<File?> courseImage = Rx<File?>(null);
-
+    if(subjects.length<=0){
+      subjects.add(SubjectModel(title: 'Flutter', slug: 'Programming', photo: '', totalCourses: 1));
+    }
     var titleController = TextEditingController();
     var overviewController = TextEditingController();
     String selectedSubject = subjects.first.slug;
@@ -199,9 +207,22 @@ class CoursesPage extends StatelessWidget {
     if (course != null) {
       titleController.text = course.title;
       overviewController.text = course.overview;
-      selectedSubject = subjects
-          .firstWhere((element) => element.title == course.subject)
-          .slug;
+      if(subjects.length<=0){
+        subjects.add(SubjectModel(title: 'Flutter', slug: 'Programming', photo: '', totalCourses: 1));
+      }else{
+
+        selectedSubject = subjects
+            .firstWhere(
+              (element) => element.title == course.subject,
+          orElse: () =>subjects.first, // Fallback subject
+        )
+            .slug;
+        if(selectedSubject==null){
+          selectedSubject=subjects.first.slug;
+        }
+        print(selectedSubject);
+      }
+
     }
 
     Future<void> _pickImage() async {

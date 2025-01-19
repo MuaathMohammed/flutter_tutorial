@@ -15,15 +15,14 @@ class CourseModel {
     required this.createdAt,
   });
 
-  factory CourseModel.fromJson(Map<String, dynamic> json) {
-    return CourseModel(
-        id: json['id'],
-        title: json['title'],
-        subject: json['subject'],
-        overview: json['overview'],
-        photo: json['photo'] ?? '',
-        createdAt: json['created']);
-  }
+  factory CourseModel.fromJson(Map<String, dynamic> json) => CourseModel(
+    id: json['id'] as int,
+    title: json['title'] as String,
+    subject: json['subject'] as String,
+    overview: json['overview'] as String,
+    photo: json['photo'] as String?, // Nullable
+    createdAt: json['createdAt'] as String,
+  );
   // Convert the model to a JSON map
   Map<String, dynamic> toJson() {
     return {

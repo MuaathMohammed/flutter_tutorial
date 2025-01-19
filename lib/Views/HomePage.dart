@@ -24,7 +24,10 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(onPressed: (){
             Get.find<LoginController>().logout();
-          }, icon: Icon(Icons.logout))
+          }, icon: Icon(Icons.logout)),
+          IconButton(onPressed: (){
+            Get.to(()=>CoursesPage());
+          }, icon: Icon(Icons.add))
         ],
         centerTitle: true,
         backgroundColor: primaryColor,
