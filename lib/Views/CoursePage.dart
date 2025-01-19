@@ -105,8 +105,8 @@ class CoursesPage extends StatelessWidget {
                         child: Row(
                           children: [
                             Material(
-                              elevation: 2,
-                              borderRadius: BorderRadius.circular(8),
+                              elevation: 10,
+                              borderRadius: BorderRadius.only(topRight: Radius.circular(20)),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child:CachedNetworkImage(
