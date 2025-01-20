@@ -2,8 +2,12 @@ import 'package:dio/dio.dart';
 
 import 'DioClient.dart';
 
-class ApiService {
+class DynamicApiServices {
   final DioClient _client = DioClient();
+
+   sum(x,{int? y,int? r}){
+    return x;
+  }
 
   //dyanamic post
   Future<dynamic> post(String url, {Object? data, Options? options}) async {

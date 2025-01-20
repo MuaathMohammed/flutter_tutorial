@@ -7,10 +7,10 @@ import '../Helpers/NetworkHelper.dart';
 import '../Models/CourseModel.dart';
 
 class CourseController extends GetxController {
-  final ApiService _apiService = ApiService();
+  final DynamicApiServices _apiService = DynamicApiServices();
   var courseList = <CourseModel>[].obs;
   CourseModel? courseDetail;
-  var isLoading = true.obs;
+  RxBool isLoading = true.obs;
 
   @override
   void onInit() {
