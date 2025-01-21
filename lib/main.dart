@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tutorial/Views/LoginPage.dart';
 import 'package:get/get.dart';
 
+import 'Views/ExcelImporterPage.dart';
+
 
 void main() async {
 
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home:LoginPage(),
+      home:ExcelImporterPage(),
     );
   }
 }
