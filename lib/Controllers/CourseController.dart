@@ -126,6 +126,7 @@ class CourseController extends GetxController {
           Get.snackbar('Error', response.data['error']);
         }
       } else {
+
         Get.snackbar('Info', 'Course saved locally. Sync with API when online.',
             snackPosition: SnackPosition.BOTTOM);
       }

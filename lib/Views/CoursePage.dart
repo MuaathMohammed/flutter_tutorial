@@ -217,7 +217,7 @@ class CoursesPage extends StatelessWidget {
     var subjects = Get.find<HomeController>().subjects;
     final _formKey = GlobalKey<FormState>();
     Rx<File?> courseImage = Rx<File?>(null);
-
+    RxBool x= true.obs;
     var titleController = TextEditingController();
     var overviewController = TextEditingController();
     String selectedSubject = subjects.first.slug;

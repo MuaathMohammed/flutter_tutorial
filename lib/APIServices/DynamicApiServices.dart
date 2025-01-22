@@ -5,7 +5,7 @@ import 'DioClient.dart';
 class DynamicApiServices {
   final DioClient _client = DioClient();
 
-   sum(x,{int? y,int? r}){
+   sum(x,int y,{String? r,bool? d}){
     return x;
   }
 
