@@ -304,9 +304,7 @@ class CoursesPage extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
                       : course != null && course.photo != null
-                      ? Image.network(
-                    key: ValueKey(course.photo),
-                    "${baseURL + course.photo!}",
+                      ? Image.file(File(course.photo!),
                     height: 100,
                     width: 100,
                     fit: BoxFit.cover,
