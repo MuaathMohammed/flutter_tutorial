@@ -23,7 +23,7 @@ class CourseController extends GetxController {
       isLoading(true);
 
       // Check internet connectivity
-      final isConnected = await NetworkHelper.isConnected();
+      final isConnected = await NetworkHelper.isNetworkAvailable();
 
       if (isConnected) {
         // Fetch data from the API
@@ -60,7 +60,7 @@ class CourseController extends GetxController {
       isLoading(true);
 
       // Check internet connectivity
-      final isConnected = await NetworkHelper.isConnected();
+      final isConnected = await NetworkHelper.isNetworkAvailable();
 
       if (isConnected) {
         // Fetch data from the API
@@ -94,7 +94,7 @@ class CourseController extends GetxController {
 
 
       // Check internet connectivity
-      final isConnected = await NetworkHelper.isConnected();
+      final isConnected = await NetworkHelper.isNetworkAvailable();
 
       if (isConnected) {
         // Sync with the API
@@ -154,7 +154,7 @@ class CourseController extends GetxController {
       isLoading(true);
 
       // Check internet connectivity
-      final isConnected = await NetworkHelper.isConnected();
+      final isConnected = await NetworkHelper.isNetworkAvailable();
 
       if (isConnected) {
         // Sync with the API
@@ -210,7 +210,7 @@ class CourseController extends GetxController {
 
 
       // Check internet connectivity
-      final isConnected = await NetworkHelper.isConnected();
+      final isConnected = await NetworkHelper.isNetworkAvailable();
 
       if (isConnected) {
         // Sync with the API
