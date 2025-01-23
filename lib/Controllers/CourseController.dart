@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter_tutorial/Config/constants.dart';
 import 'package:get/get.dart';
 
-import '../Helpers/SQliteDbHelper.dart';
+import '../Helpers/DbHelper.dart';
 import '../Models/CourseModel.dart';
 
 class CourseController extends GetxController {
@@ -66,7 +66,7 @@ class CourseController extends GetxController {
 
       // Add to local database first
       final newCourse = CourseModel(
-        id: DateTime.now().millisecondsSinceEpoch, // Temporary ID
+        id: DateTime.now().millisecondsSinceEpoch % 0xFFFFFFFF, // Ensure the key is within range
         title: title,
         subject: subject,
         overview: overview,
