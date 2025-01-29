@@ -1,0 +1,9 @@
+class ReminderRepository {
+  final dao = Dao<Reminder>(Reminder(), tableName: REMINDER_DB_TABLE);
+  Future<Reminder> find(int id) => dao.find(id);
+  Future<List<Reminder>> getAll() => dao.getAll();
+  Future<int> insert(Reminder reminder) => dao.insert(reminder);
+  Future<void> update(Reminder reminder) => dao.update(reminder);
+  Future<void> delete(Reminder reminder) => dao.delete(reminder);
+  Future<void> deleteById(int id) => dao.deleteById(id);
+}
