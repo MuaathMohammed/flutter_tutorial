@@ -7,7 +7,10 @@ import 'Config/InitializeHive.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await inilizeHive();
+  await Future.delayed(Duration(seconds: 10));
+
   runApp(MyApp());
 }
 class MyApp extends StatelessWidget {

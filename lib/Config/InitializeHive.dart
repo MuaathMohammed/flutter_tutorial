@@ -7,5 +7,6 @@ import '../Models/CourseModelAdapter.dart';
 inilizeHive()async{
   await Hive.initFlutter(); // Initialize Hive
   Hive.registerAdapter(CourseModelAdapter()); // Register the adapter
-  await Hive.openBox<CourseModel>('coursesBox');
+
+  await Hive.openBox<CourseModel>('coursesBox');//to open the box as table
 }

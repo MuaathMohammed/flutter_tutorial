@@ -64,16 +64,21 @@ class CourseController extends GetxController {
     try {
       isLoading(true);
 
-      // Add to local database first
-      final newCourse = CourseModel(
-        id: DateTime.now().millisecondsSinceEpoch % 0xFFFFFFFF, // Ensure the key is within range
-        title: title,
-        subject: subject,
-        overview: overview,
-        photo: photo?.path ?? '',
-        createdAt: DateTime.now().toIso8601String(), // Add current timestamp
-      );
-      await _databaseHelper.insertCourse(newCourse);
+
+        // Add to local database first
+        final newCourse = CourseModel(
+          id: DateTime
+              .now()
+              .millisecondsSinceEpoch % 0xFFFFFFFF,
+          // Ensure the key is within range
+          title: title,
+          subject: subject,
+          overview: overview,
+          photo: photo?.path ?? '',
+          createdAt: DateTime.now().toIso8601String(), // Add current timestamp
+        );
+
+        await _databaseHelper.insertCourse(newCourse);
 
         Get.snackbar('Info', 'Course saved locally. Sync with API when online.',
             snackPosition: SnackPosition.BOTTOM);

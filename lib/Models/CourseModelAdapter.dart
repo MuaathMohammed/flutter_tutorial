@@ -19,12 +19,12 @@ class CourseModelAdapter extends TypeAdapter<CourseModel> {
   }
 
   @override
-  void write(BinaryWriter writer, CourseModel obj) {
-    writer.write(obj.id);
-    writer.write(obj.title);
-    writer.write(obj.subject);
-    writer.write(obj.overview);
-    writer.write(obj.photo);
-    writer.write(obj.createdAt);
+  void write(BinaryWriter writer, CourseModel humed) {
+    writer.write(humed.id);
+    writer.write(humed.title);
+    writer.write(humed.subject);
+    writer.write(humed.overview);
+    writer.write(humed.photo);
+    writer.write(humed.createdAt);
   }
 }

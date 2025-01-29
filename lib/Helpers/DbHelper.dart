@@ -21,6 +21,7 @@ class DatabaseHelper {
   Future<List<CourseModel>> getCourses() async {
     try {
       final box = await coursesBox;
+
       final courses = box.values.toList();
       print("Fetched ${courses.length} courses from the database"); // Debug print
       return courses;
@@ -29,12 +30,24 @@ class DatabaseHelper {
       return []; // Return an empty list in case of an error
     }
   }
+  Future<CourseModel?> getCourse(id) async {
+    try {
+      final box = await coursesBox;
+      //final course = box.values.where((t)=>t.id==id).firstOrNull;
+      final course = box.get(id);
+      print("Fetched ${course} course from the database"); // Debug print
+      return course;
+    } catch (e) {
+      print('Error fetching courses: $e');
+      return null; // Return an empty list in case of an error
+    }
+  }
 
   // Insert a course into the database
   Future<int> insertCourse(CourseModel course) async {
     try {
       final box = await coursesBox;
-      await box.put(course.id, course); // Use the course ID as the key
+      await box.put(course.id,course); // Use the course ID as the key
       print("Inserted course with ID: ${course.id}"); // Debug print
       return course.id;
     } catch (e) {
@@ -61,11 +74,21 @@ class DatabaseHelper {
     try {
       final box = await coursesBox;
       await box.delete(id); // Delete the course by ID
+
       print("Deleted course with ID: $id"); // Debug print
       return id;
     } catch (e) {
       print('Error deleting course: $e');
       return -1; // Return -1 to indicate an error
+    }
+  }
+  Future<void> clearBox() async{
+    try {
+      final box = await coursesBox;
+     await box.clear(); // Delete the course by ID
+
+    } catch (e) {
+      print('Error deleting course: $e');
     }
   }
 }
